@@ -12,6 +12,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      FERNET_KEY: ${{ secrets.FERNET_KEY }}
+
     steps:
       - uses: actions/checkout@v3
 
