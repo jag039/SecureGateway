@@ -13,7 +13,7 @@ logger = setup_logger()
 def tokenize(
     request: TokenizeRequest,
     db: Session = Depends(get_db),
-    user: dict = Depends(get_current_user
+    user: dict = Depends(get_current_user)
 ):
     if user["role"] != "processor":
         logger.warning({
