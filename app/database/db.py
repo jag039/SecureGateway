@@ -17,8 +17,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-class TokenizedData(Base):
-    __tablename__ = "tokens"
-    id = Base.Column(Base.Integer, primary_key=True)
-    token = Base.Column(Base.String(), unique=True, nullable=False)
