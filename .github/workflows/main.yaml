@@ -28,6 +28,7 @@ jobs:
           --health-retries 5
 
     env:
+      PYTHONPATH: . 
       DATABASE_URL: postgres://test_user:test_pass@localhost:5432/test_db
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       FERNET_KEY: ${{ secrets.FERNET_KEY }}
