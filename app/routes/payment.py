@@ -32,4 +32,5 @@ def tokenize(
         "sub": user["sub"],
         "status": 200
     })
+    
     return {"token": token}
