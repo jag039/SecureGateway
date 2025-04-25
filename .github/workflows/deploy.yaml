@@ -33,7 +33,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem $GCP_USER@$GCP_HOST << 'EOF'
             set -e
             echo "🚀 Connected to GCP"
-            cd /home/ubuntu/my-fastapi-app
+            cd ~/SecureGateway
             git pull origin main
             source venv/bin/activate
             pip install --upgrade pip
