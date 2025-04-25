@@ -14,3 +14,6 @@ instrumentator.instrument(app).expose(app)
 @app.get("/")
 def health_check():
     return {"status": "up"}
+
+
+print("Bruh")
