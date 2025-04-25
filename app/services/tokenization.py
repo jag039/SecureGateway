@@ -1,7 +1,6 @@
 from cryptography.fernet import Fernet
 from app.models.payment import TokenizeRequest
 from app.models.token import TokenizedData
-from app.database.db import SessionLocal
 import uuid
 from dotenv import load_dotenv
 import os
@@ -9,6 +8,7 @@ import os
 load_dotenv()
 FERNET_KEY = os.getenv("FERNET_KEY")
 f = Fernet(FERNET_KEY)
+
 
 def tokenize_card(request: TokenizeRequest, db):
     token = str(uuid.uuid4())

@@ -10,14 +10,17 @@ load_dotenv()
 JWT_SECRET = os.getenv("JWT_SECRET")
 security = HTTPBearer()
 
+
 def encode_jwt(payload: dict, expires_delta: timedelta = timedelta(hours=1)):
     to_encode = payload.copy()
     to_encode["exp"] = datetime.utcnow() + expires_delta
 
     return jwt.encode(to_encode, JWT_SECRET, algorithm="HS256")
 
+
 def decode_jwt(encoded: str):
     return jwt.decode(encoded, JWT_SECRET, algorithms="HS256")
+
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
@@ -31,6 +34,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         raise HTTPException(status_code=401, detail="Token invalid")
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
+
 
 # payload = {
 #     "sub": "test-user-123",
