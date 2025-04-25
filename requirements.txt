@@ -6,7 +6,7 @@ pyjwt
 cryptography
 sqlalchemy
 prometheus-client
-psycopg2
+psycopg2-binary
 prometheus-fastapi-instrumentator
 uvicorn[standard]
 pytest
