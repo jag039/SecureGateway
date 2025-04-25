@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCP_USER: ubuntu
+      GCP_USER: ${{ secrets.GCP_USER }}
       GCP_HOST: ${{ secrets.GCP_HOST }}
       GCP_SSH_KEY: ${{ secrets.GCP_SSH_KEY }}
 
