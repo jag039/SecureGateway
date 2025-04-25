@@ -1,0 +1,47 @@
+name: Deploy to GCP Staging
+
+on:
+  push:
+    tags:
+      - 'release-*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GCP_USER: ubuntu
+      GCP_HOST: ${{ secrets.GCP_HOST }}
+      GCP_SSH_KEY: ${{ secrets.GCP_SSH_KEY }}
+
+    steps:
+      - name: Set up SSH key
+        run: |
+          echo "$GCP_SSH_KEY" > key.pem
+          chmod 600 key.pem
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Deploy FastAPI to GCP
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem $GCP_USER@$GCP_HOST << 'EOF'
+            set -e
+            echo "🚀 Connected to GCP"
+            cd /home/ubuntu/my-fastapi-app
+            git pull origin main
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            pkill -f uvicorn || true
+            nohup uvicorn app.main:app --host 0.0.0.0 --port 80 > app.log 2>&1 &
+            echo "✅ FastAPI deployed to port 80"
+          EOF
+
+      - name: Clean up SSH key
+        run: rm key.pem
